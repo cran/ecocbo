@@ -11,15 +11,16 @@ prep_data(
   Sest.method = "average",
   cases = 5,
   N = 100,
-  M = 3,
+  M = NULL,
   n,
-  m,
+  m = NULL,
   k = 50,
   transformation = "none",
   method = "bray",
   dummy = FALSE,
   useParallel = TRUE,
-  model = "single.factor"
+  model = "single.factor",
+  jitter.base = 0.5
 )
 }
 \arguments{
@@ -44,11 +45,13 @@ first order jackknife ("jack1"), second order jackknife ("jack2") and Bootstrap
 
 \item{N}{Integer. Total number of samples simulated per site.}
 
-\item{M}{Integer. Total number of replicates simulated per dataset.}
+\item{M}{Integer. Total number of replicates simulated per dataset. Not needed
+for single factor experiments.}
 
 \item{n}{Integer. Maximum number of samples to consider (must be \verb{<= N}).}
 
-\item{m}{Integer. Number of replicates to consider. (must be \verb{<=M})}
+\item{m}{Integer. Number of replicates to consider. (must be \verb{<=M}). Not needed
+for single factor experiments.}
 
 \item{k}{Integer. Number of resampling iterations. Defaults to 50.}
 
@@ -63,8 +66,11 @@ options include: "Gower", "Bray–Curtis", "Jaccard", etc.}
 \item{useParallel}{Logical.  If \code{TRUE}, enables parallel computation. Defaults
 to \code{TRUE}.}
 
-\item{model}{Character. Select the model to use. Options, so far, are
-\code{"single.factor"} and \code{"nested.symmetric"}.}
+\item{model}{Character. Select the model to use. Options are \code{"single.factor"}
+and \code{"nested.symmetric"}.}
+
+\item{jitter.base}{Numeric. Standard deviation multiplier used to add Gaussian
+jitter to \code{fs} and \code{fw}. Defaults to 0.5.}
 }
 \value{
 \code{prep_data()} returns an object of class "ecocbo_data".
@@ -105,7 +111,8 @@ simResults <- prep_data(data = epiDat, type = "counts", Sest.method = "average",
                         n = 5, m = 5, k = 30,
                         transformation = "none", method = "bray",
                         dummy = FALSE, useParallel = FALSE,
-                        model = "single.factor")
+                        model = "single.factor",
+                        jitter.base = 0)
 }
 simResults
 

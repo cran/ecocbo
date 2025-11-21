@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 #                         n = 5, k = 30,
 #                         transformation = "none", method = "bray",
 #                         dummy = FALSE, useParallel = TRUE,
-#                         model = "single.factor")
+#                         model = "single.factor", jitter.base = 0)
 
 ## ----step1--------------------------------------------------------------------
 compVar <- scompvar(data = simResults)
@@ -38,6 +38,6 @@ cboCost <- sim_cbo(betaResult, cn = 75)
 cboCost
 
 ## ----step4--------------------------------------------------------------------
-plot_power(data = betaResult, n = NULL, method = "power")
+plot_power(data = betaResult, cbo = cboCost, n = NULL, method = "power")
 
 

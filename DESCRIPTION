@@ -1,6 +1,6 @@
 Package: ecocbo
 Title: Calculating Optimum Sampling Effort in Community Ecology
-Version: 0.13.0
+Version: 1.0.0
 Authors@R: c(
     person("Edlin", "Guerra-Castro", , "edlinguerra@gmail.com", role = c("aut", "cph"),
            comment = c(ORCID = "0000-0003-3529-4507")),
@@ -26,19 +26,19 @@ URL: https://github.com/arturoSP/ecocbo
 BugReports: https://github.com/arturoSP/ecocbo/issues
 Encoding: UTF-8
 RoxygenNote: 7.3.2
-Imports: ggplot2, ggpubr, sampling, stats, rlang, dplyr, tidyr,
-        tidyselect, parabar, parallelly, vegan, SSP, plotly
+Imports: ggplot2, ggpubr, stats, rlang, tibble, dplyr, tidyr,
+        tidyselect, parabar, parallelly, vegan, SSP (>= 1.1.0), plotly
 Depends: R (>= 4.1.0)
 LazyData: true
 Suggests: knitr,rmarkdown, testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2025-08-23 16:30:24 UTC; artu
+Packaged: 2025-11-21 23:11:09 UTC; artu
 Author: Edlin Guerra-Castro [aut, cph] (ORCID:
     <https://orcid.org/0000-0003-3529-4507>),
   Arturo Sanchez-Porras [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-1691-286X>)
 Maintainer: Arturo Sanchez-Porras <sp.arturo@gmail.com>
 Repository: CRAN
-Date/Publication: 2025-08-23 16:50:02 UTC
+Date/Publication: 2025-11-21 23:30:02 UTC

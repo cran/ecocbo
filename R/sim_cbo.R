@@ -8,6 +8,10 @@
 #' \code{\link{sim_beta}}.
 #' @param cm Numeric. Fixed cost per replicate.
 #' @param cn Numeric. Cost per sampling unit.
+#' @param perm Integer. Minimum number of permutations needed to reject the null
+#' hypothesis. Defaults to 100, as it would allow for rejecting with alpha = 0.05,
+#' the user can change this value to make the testing more strict (e.g. 200 for
+#' testing alpha = 0.01 or 5000 for testing alpha = 0.001).
 #'
 #' @return A data frame with one row per candidate design. In the single factor
 #' case, the results include the available \code{n} values, their statistical
@@ -45,10 +49,8 @@
 #' sim_cbo(data = betaNested, cn = 80, cm = 180)
 #'
 
-sim_cbo <- function(data, cn, cm = NULL){
+sim_cbo <- function(data, cn, cm = NULL, perm = 100){
   # Obtaining parameters from the ecocbo_beta object
-  # data <- beta2
-  # beta1 <- sim_beta(data = simResults, alpha = 0.05)
   powr <- subset(data$Power, select = -c(Beta, fCrit))
   objective <- 1 - data$alpha
   model <- data$model
@@ -65,8 +67,13 @@ sim_cbo <- function(data, cn, cm = NULL){
     # Find the combinations that achieve the criteria
     powr$OptPower <- powr$Power >= objective
     powr$OptPerm <- minimum_cbo(model, a = a,
-                                m = powr$m, n = powr$n)
+                                m = powr$m, n = powr$n,
+                                perm)
 
+    # Filter out the cases when n = 2
+    powr[powr$n == 2, 5] <- FALSE
+
+    # Find the cases when power and permutations are valid
     ideal <- powr |>
       dplyr::filter(OptPower, OptPerm)
 
@@ -97,8 +104,12 @@ sim_cbo <- function(data, cn, cm = NULL){
     # Find the iterations that meet the desired power range
     powr$OptPower <- powr$Power >= objective
     powr$OptPerm <- minimum_cbo(model, a = a,
-                                n = powr$n)
+                                n = powr$n, perm = perm)
 
+    # Filter out n = 2
+    powr[powr$n == 2, 5] <- FALSE
+
+    # Find the cases when power and permutations are valid
     ideal <- powr |>
       dplyr::filter(OptPower, OptPerm)
 
